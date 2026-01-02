@@ -40,8 +40,6 @@ jobs:
       - name: Deploy to S3
         run: |
           aws s3 sync build/ s3://mern-app-react-build-development/ --delete --exact-timestamps
-
-      # ...existing code...
       - name: Refresh Auto Scaling Group
         run: |
           aws autoscaling start-instance-refresh \
@@ -51,4 +49,3 @@ jobs:
               "InstanceWarmup": 300
             }' \
             --region us-west-2
-      # ...existing code...
