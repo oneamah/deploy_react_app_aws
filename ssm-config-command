@@ -1,0 +1,5 @@
+aws ssm put-parameter `
+>>   --name "/react-app/github_deploy_key" `
+>>   --type "SecureString" `
+>>   --value (Get-Content C:\Users\oneam\.ssh\id_rsa -Raw) `
+>>   --overwrite

@@ -1,0 +1,23 @@
+#cloud-config
+package_update: true
+packages:
+  - nginx
+  - curl
+  - awscli
+
+runcmd:
+  - mkdir -p /var/www/html
+  - aws s3 cp s3://${s3_bucket}/ /var/www/html/ --recursive
+  - |
+    cat <<EOF > /etc/nginx/sites-available/default
+    server {
+      listen 80;
+      root /var/www/html;
+      index index.html;
+      location / {
+        try_files \$uri /index.html;
+      }
+    }
+    EOF
+  - systemctl enable nginx
+  - system
